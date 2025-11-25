@@ -1,0 +1,93 @@
+✅ CARPETA LISTA PARA STREAMLIT CLOUD
+
+📍 Ubicación: 
+   c:\Users\USUARIO\Desktop\REPORTE MENSUAL WORLDTEL\GENERACION DE LIQUIDACIONES\streamlit-deploy\
+
+📦 ARCHIVOS INCLUIDOS (16 archivos + 1 carpeta):
+
+🐍 CÓDIGO PYTHON:
+   ✓ app.py                         - Aplicación principal
+   ✓ generador_cache.py             - Sistema de caché ultra-rápido
+   ✓ generador_pdf.py               - Generación de PDFs
+   ✓ generador_liquidaciones.py     - Lógica de negocios
+   ✓ calculador_intereses.py        - Cálculos de intereses y mora
+
+📊 DATOS Y RECURSOS:
+   ✓ factor_interes.xlsx            - Tabla de factores de interés
+   ✓ DetalleEmpresas_Camp_709.xlsx  - Datos PREJUDICIAL FLUJO
+   ✓ DetalleEmpresas_Camp_713.xlsx  - Datos REDIRECCIONAMIENTO
+   ✓ DetalleEmpresas_Camp_714.xlsx  - Datos DEUDA REAL TOTAL
+   ✓ DetalleEmpresas_Camp_717.xlsx  - Datos PRESUNTA
+   ✓ logo_coronado.png              - Logo de Coronado
+
+📝 CONFIGURACIÓN:
+   ✓ requirements.txt               - Dependencias (pandas, streamlit, reportlab, openpyxl)
+   ✓ .streamlit/config.toml         - Configuración de tema y UI
+   ✓ .streamlit/secrets.toml.example - Ejemplo de secretos
+   ✓ .gitignore                     - Archivos a ignorar en Git
+
+📖 DOCUMENTACIÓN:
+   ✓ README.md                      - Guía completa del proyecto
+   ✓ DEPLOYMENT.md                  - Instrucciones para Streamlit Cloud
+   ✓ ESTRUCTURA.txt                 - Este archivo
+
+═══════════════════════════════════════════════════════════════
+
+🚀 PRÓXIMOS PASOS:
+
+1️⃣  CREAR REPOSITORIO GITHUB:
+    - Ve a https://github.com/new
+    - Crea un nuevo repositorio (ej: "liquidaciones-worldtel")
+    - NO inicialices con README (ya tenemos uno)
+
+2️⃣  CONFIGURAR GIT LOCALMENTE:
+    cd "c:\Users\USUARIO\Desktop\REPORTE MENSUAL WORLDTEL\GENERACION DE LIQUIDACIONES\streamlit-deploy"
+    git init
+    git add .
+    git commit -m "Initial commit: Sistema de Liquidaciones WorldTel v2.0"
+    git branch -M main
+    git remote add origin https://github.com/TU_USUARIO/liquidaciones-worldtel.git
+    git push -u origin main
+
+3️⃣  DESPLEGAR EN STREAMLIT CLOUD:
+    - Ve a https://streamlit.io/cloud
+    - Inicia sesión con GitHub
+    - Haz clic en "New app"
+    - Selecciona tu repositorio
+    - Archivo: app.py
+    - Espera a que se despliegue (~2 minutos)
+
+4️⃣  ¡LISTO! Tu app estará en línea:
+    https://[tu-usuario]-liquidaciones-worldtel.streamlit.app
+
+═══════════════════════════════════════════════════════════════
+
+⚡ CARACTERÍSTICAS:
+   ✅ Búsqueda rápida de RUCs
+   ✅ Generación instantánea de PDFs
+   ✅ Soporte de 4 campañas diferentes
+   ✅ Tabla con totales automáticos
+   ✅ Interfaz profesional
+   ✅ Caché ultra-rápido (<100ms después de primera carga)
+
+═══════════════════════════════════════════════════════════════
+
+⚠️  IMPORTANTE ANTES DE SUBIR:
+
+   [ ] Verifica que NO haya datos sensibles
+   [ ] Confirma que .gitignore es correcto
+   [ ] Prueba localmente: streamlit run app.py
+   [ ] Revisa README.md y DEPLOYMENT.md
+
+═══════════════════════════════════════════════════════════════
+
+📞 SOPORTE:
+   - Streamlit Docs: https://docs.streamlit.io
+   - Issues: Abre un issue en tu repositorio
+   - Community: https://discuss.streamlit.io
+
+═══════════════════════════════════════════════════════════════
+
+Versión: 2.0
+Fecha: 25 de noviembre de 2025
+¡Listo para compartir! 🎉
