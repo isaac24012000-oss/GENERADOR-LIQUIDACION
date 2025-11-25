@@ -1,0 +1,57 @@
+📦 CARPETA LISTA PARA STREAMLIT CLOUD
+
+✅ Contenido incluido:
+
+Archivos principales:
+  ✓ app.py                           - Aplicación Streamlit
+  ✓ generador_cache.py               - Sistema de caché
+  ✓ generador_pdf.py                 - Generador de PDFs
+  ✓ generador_liquidaciones.py       - Lógica principal
+  ✓ calculador_intereses.py          - Cálculos
+
+Datos:
+  ✓ factor_interes.xlsx              - Tabla de factores de interés
+  ✓ DetalleEmpresas_Camp_*.xlsx      - Datos de empresas (4 archivos)
+  ✓ logo_coronado.png                - Logo de la empresa
+
+Configuración:
+  ✓ requirements.txt                 - Dependencias Python
+  ✓ .streamlit/config.toml           - Configuración Streamlit
+  ✓ .streamlit/secrets.toml.example  - Ejemplo de secretos
+  ✓ .gitignore                       - Archivos a ignorar
+
+Documentación:
+  ✓ README.md                        - Documentación principal
+  ✓ DEPLOYMENT.md                    - Guía de despliegue
+  ✓ ESTRUCTURA.txt                   - Este archivo
+
+🚀 PASOS PARA DESPLEGAR:
+
+1. Copia esta carpeta a tu máquina
+2. Sube a un nuevo repositorio GitHub
+3. Conecta a Streamlit Cloud
+4. ¡Listo! Tu app está en línea
+
+📋 CHECKLIST ANTES DE COMPARTIR:
+
+  [ ] Verificar que todos los archivos Excel estén incluidos
+  [ ] Confirmar que el logo está en la carpeta
+  [ ] Revisar que requirements.txt tiene todas las dependencias
+  [ ] Probar la app localmente: streamlit run app.py
+  [ ] Hacer push a GitHub
+  [ ] Crear app en Streamlit Cloud
+
+⚠️ IMPORTANTE:
+
+  • NO subas archivos con datos sensibles
+  • Usa .gitignore para archivos locales
+  • Verifica que el caché no se commitea
+  • Mantén secrets.toml en secretos de Streamlit Cloud
+
+📞 CUALQUIER DUDA:
+
+Consulta DEPLOYMENT.md para instrucciones detalladas
+
+---
+Versión: 2.0
+Fecha: 25 de noviembre de 2025
