@@ -322,10 +322,14 @@ if ruc_encontrado and campana_seleccionada:
                 # Obtener AFILIADO
                 afiliado = str(row.get('AFILIADO', '')) if 'AFILIADO' in row else ''
                 
+                # Extraer últimos 6 dígitos del período
+                periodo_completo = str(row['OPERACION'])
+                periodo = periodo_completo[-6:] if len(periodo_completo) >= 6 else periodo_completo
+                
                 datos_tabla.append({
                     'CUSSP': row['CUSSP'],
                     'Afiliado': afiliado,
-                    'Período': row['OPERACION'],
+                    'Período': periodo,
                     'Fondo': f"{fondo:.2f}",
                     'Mora': f"{mora:.2f}",
                     'Total Fondo': f"{deuda_con_mora:.2f}",
