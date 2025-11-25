@@ -43,8 +43,8 @@ class GeneradorPDF:
         # Crear PDF en memoria con orientación horizontal (landscape)
         buffer = io.BytesIO()
         doc = SimpleDocTemplate(buffer, pagesize=landscape(A4),
-                               rightMargin=0*inch, leftMargin=0*inch,
-                               topMargin=0*inch, bottomMargin=0*inch)
+                               rightMargin=0.1*inch, leftMargin=0.1*inch,
+                               topMargin=0.5*inch, bottomMargin=0.1*inch)
         
         # Contenedor de elementos
         elements = []
@@ -174,7 +174,7 @@ class GeneradorPDF:
             # Usar CUSSP completo
             cussp_str = str(row['CUSSP'])
             
-            # Obtener AFILIADO (si existe)
+            # Obtener AFILIADO (si existe) - mostrar nombre completo
             afiliado_str = str(row.get('AFILIADO', '')) if 'AFILIADO' in row else ''
             
             # Extraer solo YYYYMM del período
@@ -205,9 +205,9 @@ class GeneradorPDF:
             f"S/. {total_fondo:.2f}",
         ])
         
-        # Crear tabla con columnas más anchas para landscape - sin márgenes
-        table = Table(table_data, colWidths=[1.4*inch, 1.2*inch, 0.9*inch, 0.9*inch, 0.9*inch, 
-                                             1.2*inch, 1.2*inch])
+        # Crear tabla con columnas más anchas para landscape - maximizar espacio
+        table = Table(table_data, colWidths=[1.3*inch, 2.3*inch, 1.1*inch, 1.1*inch, 1.1*inch, 
+                                             1.4*inch, 1.4*inch])
         
         table.setStyle(TableStyle([
             # Encabezado
@@ -220,10 +220,11 @@ class GeneradorPDF:
             ('TOPPADDING', (0, 0), (-1, 0), 12),
             
             # Datos - sin grilla, más espacioso
-            ('FONTSIZE', (0, 1), (-1, -1), 10),
+            ('FONTSIZE', (0, 1), (-1, -1), 9),
             ('ALIGN', (0, 1), (-1, -1), 'RIGHT'),
             ('ALIGN', (0, 1), (0, -1), 'LEFT'),
-            ('ALIGN', (1, 1), (1, -1), 'CENTER'),
+            ('ALIGN', (1, 1), (1, -1), 'LEFT'),
+            ('ALIGN', (2, 1), (2, -1), 'CENTER'),
             ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
             ('LINEBELOW', (0, 0), (-1, 0), 1, colors.HexColor('#4472C4')),
             ('ROWPADDING', (0, 1), (-1, -1), 10),
