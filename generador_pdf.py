@@ -206,8 +206,8 @@ class GeneradorPDF:
         ])
         
         # Crear tabla con columnas más anchas para landscape - maximizar espacio
-        table = Table(table_data, colWidths=[1.3*inch, 2.3*inch, 1.1*inch, 1.1*inch, 1.1*inch, 
-                                             1.4*inch, 1.4*inch])
+        table = Table(table_data, colWidths=[1.2*inch, 2.6*inch, 1.0*inch, 1.05*inch, 1.05*inch, 
+                                             1.35*inch, 1.35*inch])
         
         table.setStyle(TableStyle([
             # Encabezado
