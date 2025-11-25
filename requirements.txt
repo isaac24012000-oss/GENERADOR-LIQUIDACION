@@ -1,13 +1,6 @@
-requirements.txt
-==============
-
-# Core
-pandas>=2.0.0
+﻿pandas>=2.0.0
 openpyxl>=3.0.0
-
-# Web
 streamlit>=1.28.0
 reportlab>=4.0.0
-
-# Opcional
 python-dotenv>=1.0.0
+pillow>=9.0.0
