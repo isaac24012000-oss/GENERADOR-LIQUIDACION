@@ -149,7 +149,7 @@ class GeneradorPDF:
         
         # Preparar datos de la tabla
         table_data = [
-            ['CUSSP', 'Período', 'Fondo', 'Mora', 'Total Admin.', 'Total Fondo'],
+            ['CUSSP', 'Afiliado', 'Período', 'Fondo', 'Mora', 'Total Admin.', 'Total Fondo'],
         ]
         
         total_fondo = 0
@@ -174,11 +174,15 @@ class GeneradorPDF:
             # Usar CUSSP completo
             cussp_str = str(row['CUSSP'])
             
+            # Obtener AFILIADO (si existe)
+            afiliado_str = str(row.get('AFILIADO', '')) if 'AFILIADO' in row else ''
+            
             # Extraer solo YYYYMM del período
             periodo_str = str(row['OPERACION'])[-6:] if len(str(row['OPERACION'])) >= 6 else str(row['OPERACION'])
             
             table_data.append([
                 cussp_str,
+                afiliado_str,
                 periodo_str,
                 f"S/. {fondo:.2f}",
                 f"S/. {mora:.2f}",
@@ -195,14 +199,15 @@ class GeneradorPDF:
             'TOTAL',
             '',
             '',
+            '',
             f"S/. {total_mora:.2f}",
             f"S/. {total_administradora:.2f}",
             f"S/. {total_fondo:.2f}",
         ])
         
         # Crear tabla con columnas más anchas para landscape - sin márgenes
-        table = Table(table_data, colWidths=[1.6*inch, 1.0*inch, 1.0*inch, 1.0*inch, 
-                                             1.4*inch, 1.4*inch])
+        table = Table(table_data, colWidths=[1.4*inch, 1.2*inch, 0.9*inch, 0.9*inch, 0.9*inch, 
+                                             1.2*inch, 1.2*inch])
         
         table.setStyle(TableStyle([
             # Encabezado

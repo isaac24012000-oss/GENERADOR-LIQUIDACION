@@ -319,8 +319,12 @@ if ruc_encontrado and campana_seleccionada:
                 total_admin_row = admin + interes_admin
                 deuda_con_mora = row['DEUDA_CON_MORA']
                 
+                # Obtener AFILIADO
+                afiliado = str(row.get('AFILIADO', '')) if 'AFILIADO' in row else ''
+                
                 datos_tabla.append({
                     'CUSSP': row['CUSSP'],
+                    'Afiliado': afiliado,
                     'Período': row['OPERACION'],
                     'Fondo': f"{fondo:.2f}",
                     'Mora': f"{mora:.2f}",

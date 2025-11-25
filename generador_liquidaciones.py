@@ -96,7 +96,7 @@ class GeneradorLiquidaciones:
         ].copy()
         
         # Agrupar por CUSSP (afiliado) y PROCESO (período)
-        datos_ruc = datos_ruc.groupby(['CUSSP', 'OPERACION', 'RAZON_SOCIAL']).agg({
+        datos_ruc = datos_ruc.groupby(['CUSSP', 'OPERACION', 'RAZON_SOCIAL', 'AFILIADO']).agg({
             'FONDO_NOMINAL': 'sum',
             'SEGURO_NOMINAL': 'sum',
             'COMISION_NOMINAL': 'sum',
@@ -131,7 +131,7 @@ class GeneradorLiquidaciones:
         datos_ruc = self.datos_completos[self.datos_completos['DOCUMENTO'] == ruc].copy()
         
         # Agrupar por CUSSP (afiliado) y PROCESO (período)
-        datos_ruc = datos_ruc.groupby(['CUSSP', 'OPERACION', 'RAZON_SOCIAL']).agg({
+        datos_ruc = datos_ruc.groupby(['CUSSP', 'OPERACION', 'RAZON_SOCIAL', 'AFILIADO']).agg({
             'FONDO_NOMINAL': 'sum',
             'SEGURO_NOMINAL': 'sum',
             'COMISION_NOMINAL': 'sum',
