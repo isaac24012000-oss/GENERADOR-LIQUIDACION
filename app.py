@@ -222,6 +222,53 @@ if ruc_encontrado and campana_seleccionada:
         
         st.info(f"**Razón Social:** {razon_social}")
         
+        # ===== FILTRO DE PERÍODOS =====
+        st.markdown("---")
+        st.markdown("### 📅 Seleccionar Períodos")
+        
+        # Extraer períodos únicos del dataset
+        periodos_todos = sorted(datos_ruc['OPERACION'].apply(lambda x: str(x)[-6:]).unique())
+        
+        # Opción: Todos o seleccionar específicos
+        col1, col2 = st.columns([1, 3])
+        with col1:
+            filtro_periodo = st.radio(
+                "Períodos:",
+                options=["Todos", "Seleccionar"],
+                key="filtro_periodo"
+            )
+        
+        periodos_seleccionados = periodos_todos
+        
+        if filtro_periodo == "Seleccionar":
+            with col2:
+                periodos_seleccionados = st.multiselect(
+                    "Elige los períodos a incluir:",
+                    options=periodos_todos,
+                    default=periodos_todos,
+                    key="periodos_multiselect"
+                )
+        
+        # Filtrar datos según períodos seleccionados
+        if periodos_seleccionados:
+            datos_ruc_filtrado = datos_ruc[
+                datos_ruc['OPERACION'].apply(lambda x: str(x)[-6:]).isin(periodos_seleccionados)
+            ]
+            total_deuda_filtrado = datos_ruc_filtrado['DEUDA_CON_MORA'].sum()
+            num_registros_filtrado = len(datos_ruc_filtrado)
+        else:
+            datos_ruc_filtrado = datos_ruc.copy()
+            total_deuda_filtrado = total_deuda
+            num_registros_filtrado = num_registros
+        
+        # Mostrar totales filtrados
+        st.markdown("**Totales con filtro aplicado:**")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Registros a pagar", num_registros_filtrado, delta=num_registros_filtrado - num_registros)
+        with col2:
+            st.metric("Deuda a pagar", f"S/. {total_deuda_filtrado:.2f}", delta=f"S/. {total_deuda_filtrado - total_deuda:.2f}")
+        
         # Formulario de opciones
         st.markdown("---")
         st.markdown("### ⚙️ Opciones Adicionales")
@@ -263,12 +310,12 @@ if ruc_encontrado and campana_seleccionada:
         if generar:
             with st.spinner("Generando PDF..."):
                 try:
-                    # Generar PDF
+                    # Generar PDF con datos filtrados
                     pdf_bytes = gen_pdf.generar_liquidacion_pdf(
                         ruc=ruc_encontrado,
                         campana=campana_seleccionada,
                         razon_social=razon_social,
-                        datos_ruc=datos_ruc,
+                        datos_ruc=datos_ruc_filtrado,
                         direccion=direccion,
                         fecha_pago=fecha_pago.strftime('%d/%m/%Y')
                     )
@@ -305,13 +352,13 @@ if ruc_encontrado and campana_seleccionada:
             st.markdown("---")
             st.markdown("### 📊 Detalle de Deuda")
             
-            # Preparar datos para mostrar
+            # Preparar datos para mostrar (usar datos filtrados)
             datos_tabla = []
             total_fondo_general = 0
             total_mora_general = 0
             total_admin_general = 0
             
-            for idx, row in datos_ruc.iterrows():
+            for idx, row in datos_ruc_filtrado.iterrows():
                 fondo = row['FONDO_NOMINAL']
                 admin = row['COMISION_NOMINAL']
                 mora = row.get('MORA', 0)
