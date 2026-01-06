@@ -251,6 +251,8 @@ class GeneradorPDF:
         gastos_cobranza = total_fondo * 0.15
         igv = gastos_cobranza * 0.18
         total_gastos = gastos_cobranza + igv
+        # Validar mínimo de 66.10 en Gastos Administrativos
+        total_gastos = max(total_gastos, 66.10)
         total_final = total_fondo + total_gastos
         
         resumen_data = [
