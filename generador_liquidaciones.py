@@ -277,6 +277,8 @@ class GeneradorLiquidaciones:
         ws['F75'] = round(total_fondo * 0.15, 2)  # 15% gastos cobranza
         ws['F76'] = round((total_fondo * 0.15) * 0.18, 2)  # IGV 18%
         gastos_admin = round(total_fondo * 0.15, 2) + round((total_fondo * 0.15) * 0.18, 2)
+        # Validar mínimo de 66.10 en Gastos Administrativos
+        gastos_admin = max(gastos_admin, 66.10)
         ws['F77'] = gastos_admin
         ws['F78'] = round(total_fondo + gastos_admin, 2)
         ws['K78'] = gastos_admin
