@@ -320,10 +320,13 @@ if ruc_encontrado and campana_seleccionada:
                         fecha_pago=fecha_pago.strftime('%d/%m/%Y')
                     )
                     
-                    # Nombre del archivo
+                    # Nombre del archivo (sin caracteres especiales)
                     campana_abrev = campana_seleccionada.replace(" ", "_").upper()[:10]
                     ruc_str = str(int(ruc_encontrado))
+                    # Usar guión bajo y sin espacios para compatibilidad
                     nombre_archivo = f"LIQUIDACION_{ruc_str}_{campana_abrev}_{fecha_pago.strftime('%d%m%Y')}.pdf"
+                    # Limpiar caracteres especiales
+                    nombre_archivo = "".join(c if c.isalnum() or c in "._-" else "_" for c in nombre_archivo)
                     
                     # Botón de descarga
                     col1, col2 = st.columns([2, 1])
@@ -333,7 +336,8 @@ if ruc_encontrado and campana_seleccionada:
                             data=pdf_bytes,
                             file_name=nombre_archivo,
                             mime="application/pdf",
-                            use_container_width=True
+                            use_container_width=True,
+                            key="download_pdf_button"
                         )
                     
                     html_success = f"""
