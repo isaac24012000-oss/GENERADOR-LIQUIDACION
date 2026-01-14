@@ -222,52 +222,89 @@ if ruc_encontrado and campana_seleccionada:
         
         st.info(f"**Razón Social:** {razon_social}")
         
-        # ===== FILTRO DE PERÍODOS =====
+        # ===== FILTROS DE PERÍODOS Y AFILIADOS =====
         st.markdown("---")
-        st.markdown("### 📅 Seleccionar Períodos")
+        st.markdown("### 🔍 Filtros")
         
-        # Extraer períodos únicos del dataset
+        # Extraer períodos y afiliados únicos del dataset
         periodos_todos = sorted(datos_ruc['OPERACION'].apply(lambda x: str(x)[-6:]).unique())
+        afiliados_todos = sorted(datos_ruc['AFILIADO'].dropna().unique())
         
-        # Opción: Todos o seleccionar específicos
-        col1, col2 = st.columns([1, 3])
+        # Crear dos columnas para los filtros
+        col1, col2 = st.columns(2)
+        
         with col1:
+            st.markdown("**📅 Períodos**")
             filtro_periodo = st.radio(
-                "Períodos:",
+                "Mostrar:",
                 options=["Todos", "Seleccionar"],
-                key="filtro_periodo"
+                key="filtro_periodo",
+                horizontal=True
             )
-        
-        periodos_seleccionados = periodos_todos
-        
-        if filtro_periodo == "Seleccionar":
-            with col2:
+            
+            periodos_seleccionados = periodos_todos
+            if filtro_periodo == "Seleccionar":
                 periodos_seleccionados = st.multiselect(
-                    "Elige los períodos a incluir:",
+                    "Elige los períodos:",
                     options=periodos_todos,
                     default=periodos_todos,
-                    key="periodos_multiselect"
+                    key="periodos_multiselect",
+                    help="Selecciona los períodos a incluir en la liquidación"
                 )
         
-        # Filtrar datos según períodos seleccionados
+        with col2:
+            st.markdown("**👥 Afiliados**")
+            filtro_afiliado = st.radio(
+                "Mostrar:",
+                options=["Todos", "Seleccionar"],
+                key="filtro_afiliado",
+                horizontal=True
+            )
+            
+            afiliados_seleccionados = afiliados_todos
+            if filtro_afiliado == "Seleccionar":
+                afiliados_seleccionados = st.multiselect(
+                    "Elige los afiliados:",
+                    options=afiliados_todos,
+                    default=afiliados_todos,
+                    key="afiliados_multiselect",
+                    help="Selecciona los afiliados a incluir en la liquidación"
+                )
+        
+        # Aplicar filtros (períodos Y afiliados)
+        datos_ruc_filtrado = datos_ruc.copy()
+        
+        # Filtro de períodos
         if periodos_seleccionados:
-            datos_ruc_filtrado = datos_ruc[
-                datos_ruc['OPERACION'].apply(lambda x: str(x)[-6:]).isin(periodos_seleccionados)
+            datos_ruc_filtrado = datos_ruc_filtrado[
+                datos_ruc_filtrado['OPERACION'].apply(lambda x: str(x)[-6:]).isin(periodos_seleccionados)
             ]
+        
+        # Filtro de afiliados
+        if afiliados_seleccionados:
+            datos_ruc_filtrado = datos_ruc_filtrado[
+                datos_ruc_filtrado['AFILIADO'].isin(afiliados_seleccionados)
+            ]
+        
+        # Calcular totales filtrados
+        if len(datos_ruc_filtrado) > 0:
             total_deuda_filtrado = datos_ruc_filtrado['DEUDA_CON_MORA'].sum()
             num_registros_filtrado = len(datos_ruc_filtrado)
         else:
-            datos_ruc_filtrado = datos_ruc.copy()
-            total_deuda_filtrado = total_deuda
-            num_registros_filtrado = num_registros
+            total_deuda_filtrado = 0
+            num_registros_filtrado = 0
         
         # Mostrar totales filtrados
-        st.markdown("**Totales con filtro aplicado:**")
-        col1, col2 = st.columns(2)
+        st.markdown("**📊 Totales con filtros aplicados:**")
+        col1, col2, col3 = st.columns(3)
         with col1:
-            st.metric("Registros a pagar", num_registros_filtrado, delta=num_registros_filtrado - num_registros)
+            st.metric("Registros", num_registros_filtrado)
         with col2:
-            st.metric("Deuda a pagar", f"S/. {total_deuda_filtrado:.2f}", delta=f"S/. {total_deuda_filtrado - total_deuda:.2f}")
+            st.metric("Deuda Total", f"S/. {total_deuda_filtrado:.2f}")
+        with col3:
+            if num_registros > 0:
+                porcentaje = (num_registros_filtrado / num_registros) * 100
+                st.metric("% Seleccionado", f"{porcentaje:.1f}%")
         
         # Formulario de opciones
         st.markdown("---")
